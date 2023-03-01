@@ -24,9 +24,10 @@ class PetFriends:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        return status, result
+        finally:
+            return status, result
 
-    def get_list_of_pets(self, auth_key: json, filter: str = "") -> json:
+    def get_list_of_pets(self, auth_key: json, filter: str = '') -> json:
         """Метод делает запрос к API сервера и возвращает статус запроса и результат в формате JSON
         со списком наденных питомцев, совпадающих с фильтром. На данный момент фильтр может иметь
         либо пустое значение - получить список всех питомцев, либо 'my_pets' - получить список
@@ -37,12 +38,13 @@ class PetFriends:
 
         res = requests.get(self.base_url + 'api/pets', headers=headers, params=filter)
         status = res.status_code
-        result = ""
+        result = ''
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        return status, result
+        finally:
+            return status, result
 
     def add_new_pet(self, auth_key: json, name: str, animal_type: str,
                     age: str, pet_photo: str) -> json:
@@ -60,13 +62,14 @@ class PetFriends:
 
         res = requests.post(self.base_url + 'api/pets', headers=headers, data=data)
         status = res.status_code
-        result = ""
+        result = ''
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        print(f'\n{result}')
-        return status, result
+        finally:
+            print(f'\n{result}')
+            return status, result
 
     def delete_pet(self, auth_key: json, pet_id: str) -> json:
         """Метод отправляет на сервер запрос на удаление питомца по указанному ID и возвращает
@@ -82,7 +85,8 @@ class PetFriends:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        return status, result
+        finally:
+            return status, result
 
     def update_pet_info(self, auth_key: json, pet_id: str, name: str,
                         animal_type: str, age: int) -> json:
@@ -103,4 +107,5 @@ class PetFriends:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        return status, result
+        finally:
+            return status, result
