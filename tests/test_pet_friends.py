@@ -1,5 +1,5 @@
 from api import PetFriends
-from settings import valid_email, valid_password
+from settings import *
 import os
 
 pf = PetFriends()
@@ -113,7 +113,9 @@ def test_successful_update_self_pet_info(name='Мурзик',
         raise Exception("There is no my pets")
 
 
+    ##########################################
 ##################### My Tests #################
+    ##########################################
 
 
 def test_add_new_pet_without_photo(name='Котопёс',
@@ -169,3 +171,29 @@ def test_add_pet_photo(pet_photo='images/cat2.jpg'):
     # Сверяем полученный ответ с ожидаемым результатом
     assert status == 200
     assert result['id'] == pet_id
+
+
+
+################ Negative Tests ###############
+
+
+
+def multitest_get_api_key_for_invalid_userName():
+    for email in invalid_email:
+        test_get_api_key_for_invalid_userName(invalid_email[email])
+
+def test_get_api_key_for_invalid_userName(email,
+        password=valid_password
+    ):
+    """ Проверяем, что запрос api-ключа возвращает статус 200,
+    и в результате содержится слово key"""
+
+    # Отправляем запрос и сохраняем полученный ответ
+    # с кодом статуса в status, а текст ответа в result
+    status, result = pf.get_api_key(
+        email,
+        password
+    )
+    # Сверяем полученные данные с нашими ожиданиями
+    assert status == 200
+    assert 'key' in result
