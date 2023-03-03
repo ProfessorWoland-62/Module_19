@@ -4,7 +4,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 
 class PetFriends:
-    """API-библиотека к веб-приложению Pet Friends"""
+    """API-библиотека к web-приложению Pet Friends"""
 
     def __init__(self):
         self.base_url = "https://petfriends.skillfactory.ru/"
@@ -23,7 +23,7 @@ class PetFriends:
         res = requests.get(f'{self.base_url}api/key',
                     headers=headers)
         status = res.status_code
-        result = ""
+        result = ''
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
